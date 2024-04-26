@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install
-yarn isntall
+yarn install
 
 # BUILD
 
