@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Install
+yarn isntall
+
 # BUILD
 
 # tsc outputs type definitions to dist-types/ in the repo root, which are then consumed by the build
