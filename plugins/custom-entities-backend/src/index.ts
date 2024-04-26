@@ -1,2 +1,2 @@
 export * from './service/router';
-export { customEntitiesBackendPlugin as default } from './plugin';
+export { customEntitiesPlugin as default } from './plugin';

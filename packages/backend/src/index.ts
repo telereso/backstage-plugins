@@ -38,4 +38,7 @@ backend.add(import('@backstage/plugin-search-backend/alpha'));
 backend.add(import('@backstage/plugin-search-backend-module-catalog/alpha'));
 backend.add(import('@backstage/plugin-search-backend-module-techdocs/alpha'));
 
+// Custom Entities
+backend.add(import('@telereso/backstage-plugin-custom-entities-backend'));
+
 backend.start();

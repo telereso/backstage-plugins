@@ -103,3 +103,15 @@ catalog:
     #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme-corp.yaml
     #   rules:
     #     - allow: [User, Group]
+
+customEntities:
+  allowGuest: true
+  providers:
+    local:
+      dir: ../../../../examples
+      name: custom-entities.yaml
+
+#    googleGcs:
+#      bucket: <my-org-bucket>
+#      folder: backstage/catalog
+#      name: custom-entities.yaml
