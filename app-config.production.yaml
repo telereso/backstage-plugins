@@ -12,7 +12,11 @@ backend:
   auth:
     keys:
       - secret: ${BACKEND_SECRET}
-
+  csp:
+    script-src:
+      - "'self'"
+      - "'unsafe-eval'" # this is required for scaffolder usage, and ajv validation.
+      - 'https://cdn.jsdelivr.netz'
   # config options: https://node-postgres.com/api/client
 #  database:
 #    client: pg
@@ -31,7 +35,7 @@ backend:
 auth:
   providers:
     guest:
-      dangerouslyAllowOutsideDevelopment:
+      dangerouslyAllowOutsideDevelopment: true
 
 catalog:
   locations:
