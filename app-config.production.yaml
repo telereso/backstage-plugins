@@ -28,8 +28,23 @@ backend:
 #      #   ca: # if you have a CA file and want to verify it you can uncomment this section
 #      #     $file: <file-path>/ca/server.crt
 
+auth:
+  providers:
+    guest:
+      dangerouslyAllowOutsideDevelopment:
+
 catalog:
-  # Overrides the default list locations from app-config.yaml as these contain example data.
-  # See https://backstage.io/docs/features/software-catalog/#adding-components-to-the-catalog for more details
-  # on how to get entities into the catalog.
-  locations: []
+  locations:
+    - type: url
+      target: https://storage.cloud.google.com/telereso-docs/backstage/catalog/custom-entities.yaml
+      rules:
+        - allow: [ Component, System, API, Resource, Location ]
+
+
+customEntities:
+  allowGuest: true
+  providers:
+    googleGcs:
+      bucket: telereso-docs
+      folder: backstage/catalog
+      name: custom-entities.yaml
