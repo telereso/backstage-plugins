@@ -35,14 +35,14 @@ ENV NODE_ENV production
 # Copy repo skeleton first, to avoid unnecessary docker cache invalidation.
 # The skeleton contains the package.json of each package in the monorepo,
 # and along with yarn.lock and the root package.json, that's enough to run yarn install.
-ADD /wrokplace/packages/backend/dist/skeleton.tar.gz ./
+ADD /workspace/packages/backend/dist/skeleton.tar.gz ./
 COPY --chown=node:node yarn.lock package.json ./
 RUN tar xzf skeleton.tar.gz && rm skeleton.tar.gz
 
 RUN yarn install --frozen-lockfile --production --network-timeout 300000
 
 # Then copy the rest of the backend bundle, along with any other files we might want.
-ADD /wrokplace/packages/backend/dist/bundle.tar.gz ./
+ADD /workspace/packages/backend/dist/bundle.tar.gz ./
 COPY --chown=node:node app-config*.yaml ./
 RUN tar xzf bundle.tar.gz && rm bundle.tar.gz
 
