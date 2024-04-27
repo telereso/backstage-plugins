@@ -9,6 +9,9 @@ backend:
   # callers. When its value is "http://localhost:7007", it's strictly private
   # and can't be reached by others.
   baseUrl: https://backstage-plugins-demo-q3zy3mrtmq-uc.a.run.app
+  auth:
+    keys:
+      - secret: ${BACKEND_SECRET}
 
   # config options: https://node-postgres.com/api/client
 #  database:
