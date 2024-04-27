@@ -17,4 +17,6 @@ mkdir -p /workspace/backend/dist
 # Pass Dist
 cp -R packages/backend/dist/* /workspace/backend/dist
 
+ls /workspace/backend/dist
+
 
