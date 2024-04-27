@@ -3,6 +3,7 @@ import express from 'express';
 import request from 'supertest';
 
 import { createRouter } from './router';
+import {ConfigReader} from "@backstage/config";
 
 describe('createRouter', () => {
   let app: express.Express;
@@ -10,6 +11,7 @@ describe('createRouter', () => {
   beforeAll(async () => {
     const router = await createRouter({
       logger: getVoidLogger(),
+      config: ConfigReader.fromConfigs([])
     });
     app = express().use(router);
   });

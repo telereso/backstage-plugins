@@ -1,5 +1,5 @@
 import React from 'react';
-import { ExampleComponent } from './ExampleComponent';
+import { PageComponent } from './PageComponent';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { screen } from '@testing-library/react';
@@ -8,7 +8,7 @@ import {
   renderInTestApp,
 } from '@backstage/test-utils';
 
-describe('ExampleComponent', () => {
+describe('PageComponent', () => {
   const server = setupServer();
   // Enable sane handlers for network requests
   setupRequestMockHandlers(server);
@@ -21,9 +21,9 @@ describe('ExampleComponent', () => {
   });
 
   it('should render', async () => {
-    await renderInTestApp(<ExampleComponent />);
+    await renderInTestApp(<PageComponent />);
     expect(
-      screen.getByText('Welcome to custom-entities!'),
+      screen.getByText('Welcome to manual-org!'),
     ).toBeInTheDocument();
   });
 });

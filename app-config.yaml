@@ -33,15 +33,8 @@ backend:
   # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
 
 integrations:
-  github:
-    - host: github.com
-      # This is a Personal Access Token or PAT from GitHub. You can find out how to generate this token, and more information
-      # about setting up the GitHub integration here: https://backstage.io/docs/integrations/github/locations#configuration
-      token: ${GITHUB_TOKEN}
-    ### Example for how to add your GitHub Enterprise instance using the API:
-    # - host: ghe.example.net
-    #   apiBaseUrl: https://ghe.example.net/api/v3
-    #   token: ${GHE_TOKEN}
+  integrations:
+    googleGcs: {}
 
 proxy:
   ### Example for how to add a proxy endpoint for the frontend.
@@ -80,7 +73,7 @@ catalog:
   locations:
     # Local example data, file locations are relative to the backend process, typically `packages/backend`
     - type: file
-      target: ../../examples/entities.yaml
+      target: ../../examples/custom-entities.yaml
 
     # Local example template
     - type: file
@@ -103,3 +96,15 @@ catalog:
     #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme-corp.yaml
     #   rules:
     #     - allow: [User, Group]
+
+customEntities:
+  allowGuest: true
+  providers:
+    local:
+      dir: ../../../../examples
+      name: custom-entities.yaml
+
+#    googleGcs:
+#      bucket: telereso-docs
+#      folder: backstage/catalog
+#      name: custom-entities.yaml
