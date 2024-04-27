@@ -12,6 +12,8 @@ yarn tsc
 # The configuration files here should match the one you use inside the Dockerfile below.
 yarn build:backend --config ../../app-config.yaml
 
+rm -rf /workspace/packages/backend/dist
+
 mkdir -p /workspace/packages/backend/dist
 
 # Pass Dist
