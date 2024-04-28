@@ -54,7 +54,7 @@ customEntities:
 
 #### providers
 
-There is 2 options, one for local and the other one for production, 
+There are 2 options, one for local and the other one for production, 
 
 In local the `custom-entities.yaml` will be stored under `example` directory of root project
 
@@ -85,17 +85,11 @@ In production add the following changes in `app-config.produciton.yaml`
 
 ```diff
 backend:
-  # Note that the baseUrl should be the URL that the browser and other clients
-  # should use when communicating with the backend, i.e. it needs to be
-  # reachable not just from within the backend host, but from all of your
-  # callers. When its value is "http://localhost:7007", it's strictly private
-  # and can't be reached by others.
   baseUrl: "https://${BACKEND_HOST}"
   auth:
     keys:
       - secret: ${BACKEND_SECRET}
 +  csp:
-+    #    connect-src: [ "'self'", 'http:', 'https:' ]
 +    script-src:
 +      - "'self'"
 +      - "'unsafe-eval'" # this is required for scaffolder usage, and ajv validation.
