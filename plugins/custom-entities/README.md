@@ -2,7 +2,7 @@
 
 This plugin provide easy UI to add new entities (Users,Groups ...etc) by storing them and provide endpoints for catalog to consume them from
 
-This is the front end plugin also check [Backend Plugin](../custom-entities-backend/README.md)
+This is the front end plugin also check [Backend Plugin](../custom-entities-backend/README.md){:target="_blank"}
 
 ## Why this plugin
 
@@ -26,7 +26,7 @@ This plugin can be used to design all the org setup then quickly validate the re
 After that the resulted `custom-entities.yaml` can be committed to some repo and location for better control and provision 
 
 ## Demo
-You can check a live demo of the plugin [here](https://backstage-plugins-demo-q3zy3mrtmq-uc.a.run.app/custom-entities) 
+You can check a live demo of the plugin [here](https://backstage-plugins-demo-q3zy3mrtmq-uc.a.run.app/custom-entities){:target="_blank"}
 
 
 ## Installation
