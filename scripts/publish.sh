@@ -7,6 +7,9 @@ function publishPlugin() {
 
     npm version "$VERSION"
 
+    yarn clean
+#    yarn lint
+#    yarn test
     yarn build
 
     npm publish --dry-run
