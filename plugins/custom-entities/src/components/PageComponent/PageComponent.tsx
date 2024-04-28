@@ -61,7 +61,7 @@ export const PageComponent = () => {
     useEffect(() => {
         customEntitiesApi.fetchCustomEntitiesYaml()
             .then((data) => setOriginalEntitiesYaml(data))
-    }, [])
+    }, [customEntitiesApi])
 
     const handleEntityChange = (e: Entity) => {
         if (isEmptyEntity(e)) {
@@ -79,8 +79,8 @@ export const PageComponent = () => {
         }
     }
 
-    const onEntitiesYamlMount = (editor: editor.IStandaloneDiffEditor) => {
-        setEntitiesYamlEditor(editor)
+    const onEntitiesYamlMount = (e: editor.IStandaloneDiffEditor) => {
+        setEntitiesYamlEditor(e)
     }
 
     const onSaveClicked = () => {
@@ -177,7 +177,7 @@ export const PageComponent = () => {
                                         && !modifiedEntitiesYaml
                                     )
                                 }
-                                variant={"outlined"}
+                                variant="outlined"
                                 onClick={onSaveClicked}>
                             {savingState ? <CircularProgress size={24}/> : 'Save'}
                         </Button>

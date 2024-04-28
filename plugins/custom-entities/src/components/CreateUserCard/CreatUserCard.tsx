@@ -25,11 +25,11 @@ export const CreatUserCard = (props: {
     onChange?: (user: UserEntity) => void
 }) => {
 
-    const [, setUser] = React.useState<UserEntity>(DEFAULT_USER);
+    const [user, setUser] = React.useState<UserEntity>(DEFAULT_USER);
 
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setUser(prevState => {
-            const newState = {...prevState, metadata: {...prevState.metadata, name: event.target.value}}
+            const newState = {...prevState, metadata: {...prevState.metadata, name: event.target.value.trim().replaceAll(" ","")}}
             props.onChange?.(newState)
             return newState
         })
@@ -37,8 +37,8 @@ export const CreatUserCard = (props: {
 
     const handleGoogleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setUser(prevState => {
-            const newState = {...prevState, metadata: {...prevState.metadata, "google.com/email": event.target.value}}
-            if (event.target.value === "") {
+            const newState = {...prevState, metadata: {...prevState.metadata, "google.com/email": event.target.value.trim().replaceAll(" ","")}}
+            if (event.target.value.trim() === "") {
                 delete (newState as any).metadata["google.com/email"]
             }
             props.onChange?.(newState)
@@ -55,9 +55,9 @@ export const CreatUserCard = (props: {
         setUser(prevState => {
             const newState = {
                 ...prevState,
-                spec: {...prevState.spec, profile: {...prevState.spec.profile, displayName: event.target.value}}
+                spec: {...prevState.spec, profile: {...prevState.spec.profile, displayName: event.target.value.trim()}}
             }
-            if (event.target.value === "") {
+            if (event.target.value.trim() === "") {
                 delete (newState as any).spec?.profile?.displayName
                 deleteProfileIfNeeded(newState)
             }
@@ -70,9 +70,9 @@ export const CreatUserCard = (props: {
         setUser(prevState => {
             const newState = {
                 ...prevState,
-                spec: {...prevState.spec, profile: {...prevState.spec.profile, email: event.target.value}}
+                spec: {...prevState.spec, profile: {...prevState.spec.profile, email: event.target.value.trim().replaceAll(" ","")}}
             }
-            if (event.target.value === "") {
+            if (event.target.value.trim() === "") {
                 delete (newState as any).spec?.profile?.email
                 deleteProfileIfNeeded(newState)
             }
@@ -87,7 +87,7 @@ export const CreatUserCard = (props: {
                 ...prevState,
                 spec: {
                     ...prevState.spec,
-                    memberOf: event.target.value.split(",").filter((e) => e !== "")
+                    memberOf: event.target.value.trim().split(",").filter((e) => e !== "")
                 }
             }
             props.onChange?.(newState)
@@ -98,23 +98,26 @@ export const CreatUserCard = (props: {
     return (
         <List>
             <ListItem>
-                <Input placeholder={"Name"} required={true} onChange={handleNameChange}
+                <Input placeholder="Name" required onChange={handleNameChange}
+                       value={user?.metadata?.name || ""}
                        disabled={props.disabled}/>
             </ListItem>
             <ListItem>
-                <Input placeholder={"Google Email"} onChange={handleGoogleEmailChange}
+                <Input placeholder="Google Email" onChange={handleGoogleEmailChange}
+                       value={user?.metadata["google.com/email"] || ""}
                        disabled={props.disabled}/>
             </ListItem>
             <ListItem>
-                <Input placeholder={"email"} onChange={handleEmailChange}
+                <Input placeholder="email" onChange={handleEmailChange}
+                       value={user?.spec?.profile?.email || ""}
                        disabled={props.disabled}/>
             </ListItem>
             <ListItem>
-                <Input placeholder={"Display Name"} onChange={handleDisplayNameChange}
+                <Input placeholder="Display Name" onChange={handleDisplayNameChange}
                        disabled={props.disabled}/>
             </ListItem>
             <ListItem>
-                <Input placeholder={"memberOf"} onChange={handleMembersChange}
+                <Input placeholder="memberOf" onChange={handleMembersChange}
                        disabled={props.disabled}/>
             </ListItem>
         </List>

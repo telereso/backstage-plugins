@@ -38,7 +38,7 @@ function getLocalEntities(config: Config, response: express.Response) {
     }
     // Set download headers
     response.setHeader('Content-Type', 'application/octet-stream');
-    response.setHeader('Content-Disposition', `attachment; filename="custom-entities.yaml"}"`);
+    response.setHeader('Content-Disposition', `attachment; filename="custom-entities.yaml"`);
 
     // Read and stream the file content
     const stream = fs.createReadStream(localEntitiesYamlFile);
@@ -75,7 +75,7 @@ async function getGcpEntities(config: Config, response: express.Response) {
 
     // Set download headers
     response.setHeader('Content-Type', 'application/octet-stream');
-    response.setHeader('Content-Disposition', `attachment; filename="custom-entities.yaml"}"`);
+    response.setHeader('Content-Disposition', `attachment; filename="${info.name}"`);
 
     const found = await storage
         .bucket(info.bucket)
