@@ -7,7 +7,7 @@ This is the backend plugin for [Frontend Plugin](../custom-entities/README.md)
 ### Install the package
 
 ```bash
-yarn add @telereso/backstage-plugin-custom-entities-backend
+yarn --cwd packages/backend add @telereso/backstage-plugin-custom-entities-backend
 ```
 
 ### Adding the plugin to your `packages/backend`
@@ -47,7 +47,7 @@ customEntities:
   allowGuest: false
   providers:
     googleGcs:
-      bucket: telereso-docs
+      bucket: <your-bucket>
       folder: backstage/catalog
       name: custom-entities.yaml
 ```

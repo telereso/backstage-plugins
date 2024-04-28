@@ -12,7 +12,7 @@ function publishPlugin() {
 #    yarn test
     yarn build
 
-    npm publish --dry-run
+    npm publish
 }
 
 currentDir=$(pwd)

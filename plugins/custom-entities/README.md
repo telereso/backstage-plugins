@@ -32,7 +32,7 @@ This is the front end plugin so make sure to setup the [Backend Plugin](../custo
 ### Install the package
 
 ```bash
-yarn add @telereso/backstage-plugin-custom-entities
+yarn --cwd packages/app add @telereso/backstage-plugin-custom-entities
 ```
 
 ### Adding the plugin to route `packages/app`
