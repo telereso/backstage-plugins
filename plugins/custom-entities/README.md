@@ -25,6 +25,10 @@ Also will give a chance to re-organise the groups in case they don't match the h
 This plugin can be used to design all the org setup then quickly validate the result in backstage,
 After that the resulted `custom-entities.yaml` can be committed to some repo and location for better control and provision 
 
+## Demo
+You can check a live demo of the plugin [here](https://backstage-plugins-demo-q3zy3mrtmq-uc.a.run.app/custom-entities) 
+
+
 ## Installation
 
 This is the front end plugin so make sure to setup the [Backend Plugin](../custom-entities-backend/README.md) as well
