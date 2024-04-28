@@ -1,6 +1,6 @@
 # Custom Entities Backend
 
-This is the backend plugin for [Frontend Plugin](../custom-entities/README.md){:target="_blank"}
+This is the backend plugin for [Frontend Plugin](../custom-entities/README.md)
 
 ## Installation
 
@@ -59,7 +59,7 @@ There are 2 options, one for local and the other one for production,
 In local the `custom-entities.yaml` will be stored under `example` directory of root project
 
 In production the plugin uses Google Cloud Storage
-You can check [backstage integration with GCS](https://backstage.io/docs/integrations/google-cloud-storage/locations/){:target="_blank"}
+You can check [backstage integration with GCS](https://backstage.io/docs/integrations/google-cloud-storage/locations/)
 
 use `bucket`, `folder` and `name` to customize how the file is stored in the bucket
 
