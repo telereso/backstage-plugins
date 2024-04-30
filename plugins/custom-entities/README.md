@@ -148,7 +148,7 @@ export class TestPermissionPolicy implements PermissionPolicy {
 +            ) {
 +                return {result: AuthorizeResult.ALLOW};
 +            }
-+            return {result: AuthorizeResult.ALLOW};
++            return {result: AuthorizeResult.DENY};
 +        }
         
         // Other permission
