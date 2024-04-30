@@ -138,10 +138,17 @@ export async function createRouter(
         response.json({status: 'ok'});
     });
 
-    router.get('/v1/entities.yaml', async (_, response) => {
+    router.get('/v1/entities.yaml', async (request, response) => {
         logger.debug('get entities.yaml');
 
         try {
+            const url = new URL(options.config.getString("backend.baseUrl"))
+
+            if (request.hostname != url.hostname) {
+                response.status(401).json({message: `NotAllowed host ${request.hostname}`});
+                return
+            }
+
             switch (getProvider(options.config)) {
                 case "gcp":
                     await getGcpEntities(options.config, response)
