@@ -6,12 +6,18 @@ import fs from 'fs';
 import path from 'path';
 import {Config} from "@backstage/config";
 import {Storage} from '@google-cloud/storage';
+import {PermissionEvaluator} from '@backstage/plugin-permission-common';
+import {createPermissionIntegrationRouter} from '@backstage/plugin-permission-node';
+import {
+    customEntitiesUpdatePermission
+} from '@telereso/backstage-plugin-custom-entities-common';
 
 const storage = new Storage();
 
 export interface RouterOptions {
     logger: LoggerService;
     config: RootConfigService;
+    permissions: PermissionEvaluator;
 }
 
 function getProvider(config: Config) {
@@ -120,6 +126,10 @@ export async function createRouter(
 ): Promise<express.Router> {
     const {logger} = options;
 
+    const permissionIntegrationRouter = createPermissionIntegrationRouter({
+        permissions: [customEntitiesUpdatePermission],
+    });
+
     const router = Router();
     router.use(express.json());
 
@@ -149,8 +159,25 @@ export async function createRouter(
         }
     });
 
+    router.use(permissionIntegrationRouter);
+
     router.post('/v1/entities.yaml', async (request, response) => {
         logger.debug('post entities.yaml');
+
+        // TODO check user before update
+        // const token = getBearerTokenFromAuthorizationHeader(
+        //     request.header('authorization'),
+        // );
+        // const decision = (
+        //     await permissions.authorize([{permission: customEntitiesUpdatePermission}], {
+        //         token,
+        //     })
+        // )[0];
+        //
+        // if (decision.result === AuthorizeResult.DENY) {
+        //     // throw new NotAllowedError('Unauthorized');
+        // }
+
         try {
             switch (getProvider(options.config)) {
                 case "gcp":

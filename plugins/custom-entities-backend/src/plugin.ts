@@ -17,16 +17,19 @@ export const customEntitiesPlugin = createBackendPlugin({
         httpRouter: coreServices.httpRouter,
         logger: coreServices.logger,
         config: coreServices.rootConfig,
+        permissions: coreServices.permissions,
       },
       async init({
         httpRouter,
         logger,
-                   config,
+        config,
+        permissions
       }) {
         httpRouter.use(
           await createRouter({
             logger,
-            config
+            config,
+            permissions
           }),
         );
         httpRouter.addAuthPolicy({

@@ -17,6 +17,11 @@ function publishPlugin() {
 
 currentDir=$(pwd)
 
-publishPlugin "$currentDir/plugins/custom-entities"
+yarn tsc
 
+publishPlugin "$currentDir/plugins/custom-entities-common"
+
+publishPlugin "$currentDir/plugins/custom-entities"
+#
 publishPlugin "$currentDir/plugins/custom-entities-backend"
+

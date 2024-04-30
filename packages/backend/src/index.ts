@@ -7,6 +7,7 @@
  */
 
 import { createBackend } from '@backstage/backend-defaults';
+import {permissionBackendModule} from "./permission/policy";
 
 const backend = createBackend();
 
@@ -29,9 +30,7 @@ backend.add(
 
 // permission plugin
 backend.add(import('@backstage/plugin-permission-backend/alpha'));
-backend.add(
-  import('@backstage/plugin-permission-backend-module-allow-all-policy'),
-);
+backend.add(permissionBackendModule);
 
 // search plugin
 backend.add(import('@backstage/plugin-search-backend/alpha'));
