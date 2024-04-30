@@ -101,7 +101,6 @@ permission:
   enabled: true
 
 customEntities:
-  allowGuest: true
   providers:
     local:
       dir: ../../../../examples

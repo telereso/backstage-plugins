@@ -2,6 +2,7 @@
 import {
     ConfigApi,
     createApiRef,
+    FetchApi
 } from '@backstage/core-plugin-api';
 
 // Define API default path
@@ -10,6 +11,7 @@ const DEFAULT_PATH = '/api/custom-entities';
 // Define API options
 export type Options = {
     configApi: ConfigApi;
+    fetchApi: FetchApi;
 };
 
 // Defining API client interface
@@ -29,10 +31,12 @@ export class CustomEntitiesApiClient implements CustomEntitiesApi {
 
 
     private readonly configApi: ConfigApi;
+    private readonly fetchApi: FetchApi;
 
     // Declare constructor
     constructor(options: Options) {
         this.configApi = options.configApi;
+        this.fetchApi = options.fetchApi;
     }
 
 
@@ -44,14 +48,14 @@ export class CustomEntitiesApiClient implements CustomEntitiesApi {
     // create method to fetch data
     private async fetch<T = any>(input: string, init?: RequestInit): Promise<T> {
         const baseUrl = this.getBaseUrl();
-        const resp = await fetch(`${baseUrl}${input}`, init);
+        const resp = await this.fetchApi.fetch(`${baseUrl}${input}`, init);
         if (!resp.ok) throw new Error(resp.statusText);
         return await resp.json();
     }
 
     private async fetchString(input: string, init?: RequestInit): Promise<string> {
         const baseUrl = this.getBaseUrl();
-        const resp = await fetch(`${baseUrl}${input}`, init);
+        const resp = await this.fetchApi.fetch(`${baseUrl}${input}`, init);
         if (!resp.ok) throw new Error(resp.statusText);
         return await resp.text();
     }
