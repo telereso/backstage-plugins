@@ -97,6 +97,9 @@ catalog:
     #   rules:
     #     - allow: [User, Group]
 
+permission:
+  enabled: true
+
 customEntities:
   allowGuest: true
   providers:

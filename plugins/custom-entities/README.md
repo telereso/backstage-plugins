@@ -88,3 +88,72 @@ export const Root = ({ children }: PropsWithChildren<{}>) => (
 );
 
 ```
+
+
+#### Admin Permission 
+
+To only give access to admins for this plugin, you can make the following changes 
+
+```bash
+yarn --cwd packages/app add @telereso/backstage-plugin-custom-entities-common
+yarn --cwd packages/backend add @telereso/backstage-plugin-custom-entities-common
+```
+
+Update `packages/app/src/compoenets/Root/root.tsx`
+
+```diff
++import SupervisedUserCircleSharpIcon from '@material-ui/icons/SupervisedUserCircleSharp';
+import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
++ import {customEntitiesAdministerPermission} from "@telereso/backstage-plugin-custom-entities-common";
+
+export const Root = ({ children }: PropsWithChildren<{}>) => (
+  <SidebarPage>
+    <Sidebar>
+      <SidebarLogo />
+      <SidebarGroup label="Search" icon={<SearchIcon />} to="/search">
+        <SidebarSearchModal />
+      </SidebarGroup>
+      <SidebarDivider />
+      <SidebarGroup label="Menu" icon={<MenuIcon />}>
+        {/* Other Items and groups */}
+        <SidebarItem icon={LibraryBooks} to="docs" text="Docs" />
++        <RequirePermission
++            permission={customEntitiesAdministerPermission}
++            errorPage={<></>}>
++          <SidebarItem icon={SupervisedUserCircleSharpIcon} to="custom-entities" text="Custom Entities" />
++        </RequirePermission>
+        <SidebarItem icon={CreateComponentIcon} to="create" text="Create..." />
+        {/* Other Items and groups */}
+  </SidebarPage>
+);
+
+```
+
+then update your policy 
+
+
+```diff
++import {customEntitiesUpdatePermission} from "@telereso/backstage-plugin-custom-entities-common"
+
+
+const GROUP_BACKSTAGE_ADMINS = 'group:default/backstage-admins'
+
+export class TestPermissionPolicy implements PermissionPolicy {
+    async handle(request: PolicyQuery, user?: BackstageIdentityResponse,): Promise<PolicyDecision> {
+
+        // Custom Entities
+        +if (isPermission(request.permission, customEntitiesUpdatePermission)) {
+        +    if (user?.identity.ownershipEntityRefs.includes(GROUP_BACKSTAGE_ADMINS,)
+        +    ) {
+        +        return {result: AuthorizeResult.ALLOW};
+        +    }
+        +    return {result: AuthorizeResult.ALLOW};
+        +}
+        
+        // Other permission
+
+        return {result: AuthorizeResult.ALLOW};
+    }
+}
+```

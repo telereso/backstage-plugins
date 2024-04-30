@@ -27,6 +27,8 @@ import {
 } from '@backstage/core-components';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import {RequirePermission} from "@backstage/plugin-permission-react";
+import {customEntitiesAdministerPermission} from "@telereso/backstage-plugin-custom-entities-common";
 
 const useSidebarLogoStyles = makeStyles({
   root: {
@@ -69,7 +71,11 @@ export const Root = ({ children }: PropsWithChildren<{}>) => (
         <SidebarItem icon={HomeIcon} to="catalog" text="Home" />
         <SidebarItem icon={ExtensionIcon} to="api-docs" text="APIs" />
         <SidebarItem icon={LibraryBooks} to="docs" text="Docs" />
-        <SidebarItem icon={SupervisedUserCircleSharpIcon} to="custom-entities" text="Custom Entities" />
+        <RequirePermission
+            permission={customEntitiesAdministerPermission}
+            errorPage={<></>}>
+          <SidebarItem icon={SupervisedUserCircleSharpIcon} to="custom-entities" text="Custom Entities" />
+        </RequirePermission>
         <SidebarItem icon={CreateComponentIcon} to="create" text="Create..." />
         {/* End global nav */}
         <SidebarDivider />
