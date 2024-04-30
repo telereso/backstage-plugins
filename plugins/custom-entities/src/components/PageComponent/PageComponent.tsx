@@ -106,7 +106,7 @@ export const PageComponent = () => {
 
     return (
         <Page themeId="tool">
-            <Header title="Custom Entiets" subtitle="Dashboard">
+            <Header title="Custom Entities" subtitle="Dashboard">
                 <HeaderLabel label="Owner" value="Telereso"/>
                 <HeaderLabel label="Lifecycle" value="Experimental"/>
             </Header>
