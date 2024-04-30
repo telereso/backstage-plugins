@@ -17,9 +17,9 @@ export class TeamsPermissionPolicy implements PermissionPolicy {
         if (isPermission(request.permission, customEntitiesAdministerPermission)) {
             if (user?.identity.ownershipEntityRefs.includes(GROUP_BACKSTAGE_ADMINS,)
             ) {
-                // Change to AuthorizeResult.DENY, it's ALLOW only for demo
                 return {result: AuthorizeResult.ALLOW};
             }
+            // Change to AuthorizeResult.DENY, it's ALLOW only for demo
             return {result: AuthorizeResult.ALLOW};
         }
 
