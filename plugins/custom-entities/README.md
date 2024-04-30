@@ -143,13 +143,13 @@ export class TestPermissionPolicy implements PermissionPolicy {
     async handle(request: PolicyQuery, user?: BackstageIdentityResponse,): Promise<PolicyDecision> {
 
         // Custom Entities
-        +if (isPermission(request.permission, customEntitiesUpdatePermission)) {
-        +    if (user?.identity.ownershipEntityRefs.includes(GROUP_BACKSTAGE_ADMINS,)
-        +    ) {
-        +        return {result: AuthorizeResult.ALLOW};
-        +    }
-        +    return {result: AuthorizeResult.ALLOW};
-        +}
++        if (isPermission(request.permission, customEntitiesUpdatePermission)) {
++            if (user?.identity.ownershipEntityRefs.includes(GROUP_BACKSTAGE_ADMINS,)
++            ) {
++                return {result: AuthorizeResult.ALLOW};
++            }
++            return {result: AuthorizeResult.ALLOW};
++        }
         
         // Other permission
 
