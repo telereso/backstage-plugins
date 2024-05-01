@@ -17,6 +17,7 @@ backend:
     script-src:
       - "'self'"
       - "'unsafe-eval'" # this is required for scaffolder usage, and ajv validation.
+      - "'unsafe-inline'" # this is required for google tag manager
       - 'https://cdn.jsdelivr.net'
       - 'https://www.googletagmanager.com'
   reading:
