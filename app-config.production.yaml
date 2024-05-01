@@ -18,6 +18,7 @@ backend:
       - "'self'"
       - "'unsafe-eval'" # this is required for scaffolder usage, and ajv validation.
       - 'https://cdn.jsdelivr.net'
+      - 'https://www.googletagmanager.com'
   reading:
     allow:
       - host: "${BACKEND_HOST}"
