@@ -36,11 +36,12 @@ export const customEntitiesPlugin = createBackendPlugin({
           path: '/health',
           allow: 'unauthenticated',
         });
-        if (config.getConfig("customEntities").getBoolean("allowGuest"))
-          httpRouter.addAuthPolicy({
-            path: '/v1/entities.yaml',
-            allow: 'unauthenticated',
+
+        httpRouter.addAuthPolicy({
+          path: '/v1/entities.yaml',
+          allow: 'unauthenticated',
         });
+
       },
     });
   },

@@ -34,7 +34,6 @@ The plugin has its own configuration in `app-config.yaml`
 Local
 ```yaml
 customEntities:
-  allowGuest: true
   providers:
     local:
       dir: ../../../../examples
@@ -44,7 +43,6 @@ customEntities:
 Production
 ```yaml
 customEntities:
-  allowGuest: false
   providers:
     googleGcs:
       bucket: <your-bucket>
@@ -64,10 +62,6 @@ You can check [backstage integration with GCS](https://backstage.io/docs/integra
 use `bucket`, `folder` and `name` to customize how the file is stored in the bucket
 
 _Other providers will be introduced in the future, most likely will include database integration_
-
-
-#### allowGuest
-Meant for local development only if the backstage only allow guest users, in production should be disabled
 
 ### Read Entities 
 

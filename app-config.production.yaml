@@ -34,7 +34,6 @@ catalog:
         - allow: [ User, Group, Component, System, API, Resource, Location ]
 
 customEntities:
-  allowGuest: true
   providers:
     googleGcs:
       bucket: telereso-docs

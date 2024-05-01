@@ -3,6 +3,7 @@ import {
     createRoutableExtension,
     createApiFactory,
     configApiRef,
+    fetchApiRef
 } from '@backstage/core-plugin-api';
 
 import {rootRouteRef} from './routes';
@@ -15,9 +16,10 @@ export const customEntitiesPlugin = createPlugin({
             api: CustomEntitiesApiRef,
             deps: {
                 configApi: configApiRef,
+                fetchApi: fetchApiRef,
             },
-            factory: ({configApi}) =>
-                new CustomEntitiesApiClient({configApi}),
+            factory: ({configApi, fetchApi}) =>
+                new CustomEntitiesApiClient({configApi, fetchApi}),
         }),
     ],
     routes: {

@@ -13,6 +13,9 @@ function publishPlugin() {
     yarn build
 
     npm publish
+
+    # rest version
+    npm version "0.1.0"
 }
 
 currentDir=$(pwd)
@@ -22,6 +25,6 @@ yarn tsc
 publishPlugin "$currentDir/plugins/custom-entities-common"
 
 publishPlugin "$currentDir/plugins/custom-entities"
-#
+
 publishPlugin "$currentDir/plugins/custom-entities-backend"
 

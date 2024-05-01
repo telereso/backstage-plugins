@@ -31,6 +31,9 @@ backend:
     client: better-sqlite3
     connection: ':memory:'
   # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
+  reading:
+    allow:
+      - host: localhost:7007
 
 integrations:
   integrations:
@@ -71,9 +74,10 @@ catalog:
   rules:
     - allow: [Component, System, API, Resource, Location]
   locations:
-    # Local example data, file locations are relative to the backend process, typically `packages/backend`
-    - type: file
-      target: ../../examples/custom-entities.yaml
+    - type: url
+      target: "http://localhost:7007/api/custom-entities/v1/entities.yaml"
+      rules:
+        - allow: [ User, Group, Component, System, API, Resource, Location ]
 
     # Local example template
     - type: file
@@ -101,7 +105,6 @@ permission:
   enabled: true
 
 customEntities:
-  allowGuest: true
   providers:
     local:
       dir: ../../../../examples
