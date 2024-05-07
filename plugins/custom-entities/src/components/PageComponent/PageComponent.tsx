@@ -53,7 +53,7 @@ const styleSpace = {
 export const PageComponent = () => {
     const customEntitiesApi = useApi(CustomEntitiesApiRef);
 
-    const [tabValue, setTabValue] = useState("user");
+    const [tabValue, setTabValue] = useState("User");
 
 
     const [originalEntitiesYaml, setOriginalEntitiesYaml] = useState<string>()
