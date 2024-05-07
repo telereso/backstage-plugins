@@ -16,6 +16,8 @@ export type Options = {
 
 // Defining API client interface
 export interface CustomEntitiesApi {
+    getLocation(): string;
+
     fetchCustomEntitiesYaml(): Promise<string>;
 
     saveCustomEntitiesYaml(yamlString: string): Promise<void>;
@@ -25,6 +27,8 @@ export interface CustomEntitiesApi {
 export const CustomEntitiesApiRef = createApiRef<CustomEntitiesApi>({
     id: 'plugin.custom-entities-api.service',
 });
+
+const ENTITIES_PATH = '/v1/entities.yaml'
 
 // Create the API client
 export class CustomEntitiesApiClient implements CustomEntitiesApi {
@@ -60,12 +64,16 @@ export class CustomEntitiesApiClient implements CustomEntitiesApi {
         return await resp.text();
     }
 
+    getLocation(): string {
+        return `${this.getBaseUrl()}${ENTITIES_PATH}`
+    }
+
     async fetchCustomEntitiesYaml(): Promise<string> {
-        return await this.fetchString('/v1/entities.yaml');
+        return await this.fetchString(ENTITIES_PATH);
     }
 
     async saveCustomEntitiesYaml(yamlString: string): Promise<void> {
-        await this.fetch<string>('/v1/entities.yaml', {
+        await this.fetch<string>(ENTITIES_PATH, {
             method: "POST",
             headers: {
                 'Content-Type': 'text/plain'
