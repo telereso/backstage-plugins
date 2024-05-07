@@ -1,5 +1,5 @@
 import React from 'react';
-import { CreatUserCard } from './CreatUserCard';
+import { CreateEntityCard } from './CreateEntityCard';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { screen } from '@testing-library/react';
@@ -21,7 +21,7 @@ describe('PageComponent', () => {
   });
 
   it('should render', async () => {
-    await renderInTestApp(<CreatUserCard />);
+    await renderInTestApp(<CreateEntityCard />);
     expect(
       screen.getByText('Welcome to manual-org!'),
     ).toBeInTheDocument();

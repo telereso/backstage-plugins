@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {Button, Grid} from '@material-ui/core';
+import React, {useEffect, useRef, useState} from 'react';
+import {Box, Button, Grid, Tab, Tabs} from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import {useApi} from '@backstage/core-plugin-api';
@@ -14,11 +14,14 @@ import {
     SupportButton,
 } from '@backstage/core-components';
 import Editor, {DiffEditor} from '@monaco-editor/react';
-import {DEFAULT_USER, CreatUserCard} from "../CreateUserCard";
+import {defaultByKind, CreateEntityCard} from "../CreateEntityCard";
 import {Entity} from "@backstage/catalog-model";
 import {Document} from "yaml";
 import {editor} from "monaco-editor";
 import {CustomEntitiesApiRef} from "../../api/CustomEntitiesAPI";
+import LocationComponent from "./LocationComponent";
+
+const supportedKinds = ["User", "Group", "System"]
 
 const entityToYaml = (entity: Entity) => {
     const yaml = new Document();
@@ -49,8 +52,12 @@ const styleSpace = {
 }
 export const PageComponent = () => {
     const customEntitiesApi = useApi(CustomEntitiesApiRef);
+
+    const [tabValue, setTabValue] = useState("user");
+
+
     const [originalEntitiesYaml, setOriginalEntitiesYaml] = useState<string>()
-    const [entitiesYamlEditor, setEntitiesYamlEditor] = useState<editor.IStandaloneDiffEditor>()
+    const entitiesYamlEditor = useRef<editor.IStandaloneDiffEditor>()
     const [savingState, setSavingState] = useState<boolean>(false)
 
     const [newEntities, setNewEntities] = useState<Entity[]>([])
@@ -62,6 +69,10 @@ export const PageComponent = () => {
         customEntitiesApi.fetchCustomEntitiesYaml()
             .then((data) => setOriginalEntitiesYaml(data))
     }, [customEntitiesApi])
+
+    const handleTabChange = (_: React.ChangeEvent<{}>, newValue: string) => {
+        setTabValue(newValue);
+    };
 
     const handleEntityChange = (e: Entity) => {
         if (isEmptyEntity(e)) {
@@ -80,14 +91,18 @@ export const PageComponent = () => {
     }
 
     const onEntitiesYamlMount = (e: editor.IStandaloneDiffEditor) => {
-        setEntitiesYamlEditor(e)
+        entitiesYamlEditor.current = e
+        const ed = e?.getModel()?.modified;
+        ed?.onDidChangeContent((_) => {
+            setRestNewEntity((prevState) => prevState + 1)
+        });
     }
 
     const onSaveClicked = () => {
         if (entitiesYamlEditor && !savingState) {
             setSavingState(true)
             customEntitiesApi.saveCustomEntitiesYaml(
-                entitiesYamlEditor.getModifiedEditor().getValue().toString()
+                entitiesYamlEditor.current?.getModifiedEditor()?.getValue()?.toString() || ""
             ).then(() => {
                 setNewEntities([])
             }).finally(() => {
@@ -102,7 +117,7 @@ export const PageComponent = () => {
     }
 
 
-    const modifiedEntitiesYaml = entitiesYamlEditor?.getModifiedEditor()?.getValue()
+    const modifiedEntitiesYaml = entitiesYamlEditor?.current?.getModifiedEditor()?.getValue()
 
     return (
         <Page themeId="tool">
@@ -111,17 +126,36 @@ export const PageComponent = () => {
                 <HeaderLabel label="Lifecycle" value="Experimental"/>
             </Header>
             <Content>
-                <ContentHeader title="Create User">
+                <Box sx={{borderBottom: 1, borderColor: 'divider'}}
+                     style={{marginBottom: "15px"}}
+                >
+                    <Tabs value={tabValue}
+                          onChange={handleTabChange}
+                          aria-label="Entity Kinds"
+                          TabIndicatorProps={{
+                              style: {
+                                  backgroundColor: "indigo"
+                              }
+                          }}>
+                        {supportedKinds.map((e) => {
+                            return <Tab label={e} value={e}/>
+                        })}
+                    </Tabs>
+                </Box>
+                <ContentHeader title={`Create ${tabValue}`}>
+                    <LocationComponent text={customEntitiesApi.getLocation()}/>
                     <SupportButton>Here you can add users & groups to your organization</SupportButton>
                 </ContentHeader>
                 <Grid container spacing={2}>
                     <Grid item xs={2}>
-                        <CreatUserCard key={resetNewEntity} onChange={handleEntityChange} disabled={savingState}/>
+                        <CreateEntityCard key={`${tabValue}_${resetNewEntity}`} kind={tabValue}
+                                          onChange={handleEntityChange}
+                                          disabled={savingState}/>
                     </Grid>
                     <Grid item xs={3}>
                         <Editor height="32vh"
                                 defaultLanguage="yaml"
-                                defaultValue={entityToYamlString(DEFAULT_USER)}
+                                defaultValue={entityToYamlString(defaultByKind(tabValue))}
                                 options={{
                                     readOnly: savingState,
                                     lineDecorationsWidth: 0,
@@ -135,7 +169,7 @@ export const PageComponent = () => {
                                         horizontalScrollbarSize: 2
                                     }
                                 }}
-                                value={entityToYamlString(newEntity ?? DEFAULT_USER)}
+                                value={entityToYamlString(newEntity ?? defaultByKind(tabValue))}
                         />
                     </Grid>
                     <Grid item xs={1}>
